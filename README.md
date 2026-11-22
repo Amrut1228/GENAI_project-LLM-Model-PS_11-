@@ -13,14 +13,14 @@ GenAI mini project, Problem Statement 11.
 
 Admission offices receive repeated questions about courses, fees and admissions. This project provides a chat interface that sends a college information sheet and the conversation history to a local language model. Its system prompt instructs the model to answer from the sheet, cite section IDs, and refer unanswered questions to the admissions office.
 
-This is an academic prototype, not an official MIT ADT University service. The selected information embedded as `COLLEGE_INFO` in `chatbot.py` was compiled from official university pages on 22 November 2026. It is a limited snapshot; confirm current information with admissions.
+This is an academic prototype, not an official MIT ADT University service. The selected information in `college_info.txt` was compiled from official university pages on 22 November 2026. It is a limited snapshot; confirm current information with admissions.
 
 ## Features
 
 - Streamlit chat UI using `st.chat_input` and `st.chat_message`.
 - Conversation history in `st.session_state`, with a new-conversation button.
 - Local Qwen2.5-1.5B-Instruct GGUF inference through llama-cpp-python.
-- Course, fee, admission-process and contact information embedded in `chatbot.py` (no separate information file required).
+- Course, fee, admission-process and contact information in a readable text file.
 - Source-section citation instructions and explicit handling of unknown information.
 - Downloadable conversation and information sheet.
 - No API key or model training required. Internet is needed for initial installation and model download.
@@ -56,7 +56,7 @@ python -m venv .venv
 ```text
 User question + recent history
              |
-System rules + embedded college information
+System rules + college_info.txt
              |
 Local Qwen language model
              |
@@ -65,7 +65,7 @@ Answer with source-section references
 Streamlit chat + session history
 ```
 
-`chatbot.py` contains the embedded college information, exact system prompt, input validation, history construction, model loading and inference. `app.py` renders the chat and manages the session. `download_model.py` downloads the official model into `models/`. To use another trusted compatible GGUF, set the `COLLEGE_MODEL_PATH` environment variable to its local path.
+`chatbot.py` contains the exact system prompt, input validation, history construction, model loading and inference. `app.py` renders the chat and manages the session. `download_model.py` downloads the official model into `models/`. To use another trusted compatible GGUF, set the `COLLEGE_MODEL_PATH` environment variable to its local path.
 
 ## Sample checks
 
@@ -92,6 +92,21 @@ Prompt instructions reduce unsupported answers but do not guarantee factual grou
 
 Model and dependency licenses belong to their respective owners. The model weights, virtual environment and secrets are excluded from this repository.
 
-## Upload to GitHub
+## Project repository
 
-Create a repository named `llm-ps11-11` in your GitHub account. Upload the **contents** of this folder, so `app.py` and `README.md` appear at the repository root. Include `.gitignore`. Do not upload `.venv/`, `models/`, API keys or `.env` files.
+https://github.com/Amrut1228/GENAI_project-LLM-Model-PS_11-
+
+## Project files
+
+- `app.py`: Streamlit interface and session history.
+- `chatbot.py`: system prompt, information-sheet loader and model inference.
+- `college_info.txt`: editable MIT ADT information and official source links.
+- `download_model.py`: downloads the official local model.
+- `requirements.txt`: application dependencies.
+- `sample_inputs.json`: eight manual evaluation cases.
+- `setup.ps1`: Windows setup.
+- `Start-Chatbot.cmd`: Windows launcher.
+- `.gitignore`: excludes secrets, model weights and local environments.
+- `README.md`: setup, architecture and verification status.
+
+Keep `college_info.txt` beside `chatbot.py`. The app reads this file each time Streamlit reruns; edit the sheet to update the knowledge source. The information is no longer embedded in the Python code.
